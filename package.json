@@ -1,0 +1,12 @@
+{
+    "name": "starlight-ai",
+    "version": "0.0.1",
+    "main": "./dist/index.js",
+    "license": "MIT",
+    "scripts": {
+        "start": "node --require module-alias/register ."
+    },
+    "dependencies": {
+        "module-alias": "^2.2.2"
+    }
+}

@@ -15,3 +15,5 @@ docs.json
 !.env.example
 
 test.js
+config.ts
+!config.example.ts

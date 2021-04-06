@@ -1,0 +1,19 @@
+{
+    "extends": "../tsconfig.base.json",
+    "compilerOptions": {
+        "outDir": "../dist",
+        "rootDir": ".",
+        "baseUrl": ".",
+        "composite": true,
+        "jsx": "react",
+        "jsxFactory": "StarEmbed.make",
+        "noImplicitAny": false
+    },
+    "include": [
+        ".",
+        "./**/*.json"
+    ],
+    "exclude": [
+        "./tsconfig.json"
+    ]
+}

@@ -1,18 +1,22 @@
 import { MessageEmbed, ColorResolvable, MessageEmbedOptions } from 'discord.js';
 
-const EMBED_TYPES = ['embed', 'title', 'field', 'timestamp', 'footer'] as const;
+const EMBED_TYPES = ['embed', 'title', 'field', 'timestamp', 'footer', 'description', 'url'] as const;
 
-export type EmbedInformation = TitleInformation | FieldInformation | TimestampInformation | FooterInformation;
+export type EmbedInformation = TitleInformation | FieldInformation | TimestampInformation | FooterInformation | DescriptionInformation | UrlInformation;
 
 type TitleInformation = [null, string];
+type DescriptionInformation = [null, string];
+type UrlInformation = [null, string];
 type FieldInformation = [{ title?: string; inline?: boolean }, string];
 type TimestampInformation = [null, number | string | Date | null];
-type FooterInformation = [null | { iconURL?: string, proxyIconURL?: string }, string];
+type FooterInformation = [null | { iconURL?: string; proxyIconURL?: string }, string];
 type EmbedInitialInformation = [{ color: ColorResolvable }, ...EmbedInformation[]];
 
+// eslint-disable-next-line @typescript-eslint/no-namespace
 export namespace StarEmbed {
 	export function make(type: typeof EMBED_TYPES[number], ...data: EmbedInformation | EmbedInitialInformation): MessageEmbedOptions | MessageEmbed {
-		console.log(type, data);
+		// console.log(type, data);
+		if (!EMBED_TYPES.includes(type)) throw new TypeError(`Invalid type passed, expected one of ${EMBED_TYPES.join(', ')}, got: ${type}`);
 		switch (type) {
 			case 'embed': {
 				const info = data as EmbedInitialInformation;
@@ -40,11 +44,21 @@ export namespace StarEmbed {
 			}
 			case 'footer': {
 				const info = data as FooterInformation;
-				return { footer: info[0] === null ? { text: info[1] } : { proxyIconURL: info[0].proxyIconURL, iconURL: info[0].iconURL, text: info[1] } };
+				return {
+					footer: info[0] === null ? { text: info[1] } : { proxyIconURL: info[0].proxyIconURL, iconURL: info[0].iconURL, text: info[1] }
+				};
 			}
 			case 'timestamp': {
 				const info = data as TimestampInformation;
 				return { timestamp: info[1] === null ? Date.now() : new Date(info[1]) };
+			}
+			case 'description': {
+				const info = data as DescriptionInformation;
+				return { description: info[1] };
+			}
+			case 'url': {
+				const info = data as UrlInformation;
+				return { url: info[1] };
 			}
 		}
 	}

@@ -1,7 +1,8 @@
-import { StarEmbed } from './utils/StarEmbed';
+import { MessageEmbed } from 'discord.js';
+import { StarEmbed } from './lib/utils/StarEmbed';
 
 
-const embed = <embed color="RED">
+const embed: MessageEmbed = <embed color="RED">
     <title>This is the title</title>
     <field title="Field title">Field text</field>
     <field title="Other field title">Other field text</field>

@@ -1,5 +1,6 @@
 import { LogLevel } from '@sapphire/framework';
 import { Intents } from 'discord.js';
+import { noop } from './lib/utils';
 import '@sapphire/plugin-logger/register';
 import 'reflect-metadata';
 
@@ -29,4 +30,4 @@ const main = async (): Promise<void> => {
 	}
 };
 
-main(); // eslint-disable-line @typescript-eslint/no-floating-promises
+main().catch(noop);

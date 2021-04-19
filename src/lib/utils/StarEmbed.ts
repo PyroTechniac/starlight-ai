@@ -1,64 +1,141 @@
-import { MessageEmbed, ColorResolvable, MessageEmbedOptions } from 'discord.js';
+import { MessageEmbed, ColorResolvable } from 'discord.js';
 
-const EMBED_TYPES = ['embed', 'title', 'field', 'timestamp', 'footer', 'description', 'url'] as const;
+const EMBED_TYPES = ['embed', 'title', 'field', 'timestamp', 'footer', 'description', 'url', 'image'] as const;
 
-export type EmbedInformation = TitleInformation | FieldInformation | TimestampInformation | FooterInformation | DescriptionInformation | UrlInformation;
+type EmbedInformation =
+	| TitleInformation
+	| FieldInformation
+	| TimestampInformation
+	| FooterInformation
+	| DescriptionInformation
+	| UrlInformation
+	| ImageInformation;
 
+type EmbedData = TitleData | FieldData | TimestampData | FooterData | DescriptionData | UrlData | ImageData | EmptyData;
+
+const enum TsxTypes {
+	Title,
+	Description,
+	Url,
+	Field,
+	Timestamp,
+	Footer,
+	Image,
+	Empty
+}
+
+// Received types
 type TitleInformation = [null, string];
 type DescriptionInformation = [null, string];
 type UrlInformation = [null, string];
 type FieldInformation = [{ title?: string; inline?: boolean }, string];
 type TimestampInformation = [null, number | string | Date | null];
-type FooterInformation = [null | { iconURL?: string; proxyIconURL?: string }, string];
-type EmbedInitialInformation = [{ color: ColorResolvable }, ...EmbedInformation[]];
+type FooterInformation = [null | { iconURL?: string }, string];
+type EmbedInitialInformation = [{ color: ColorResolvable } | null, ...EmbedData[]];
+type ImageInformation = [{ url: string }, null];
 
+// Returned types
+type TitleData = [TsxTypes.Title, string];
+type DescriptionData = [TsxTypes.Description, string];
+type UrlData = [TsxTypes.Url, string];
+type FieldData = [TsxTypes.Field, string, string, boolean];
+type TimestampData = [TsxTypes.Timestamp, Date];
+type FooterData = [TsxTypes.Footer, string, string?];
+type ImageData = [TsxTypes.Image, string];
+type EmptyData = [TsxTypes.Empty];
+
+/**
+ * The namespace to import for embed-jsx
+ *
+ * @example
+ * ```tsx
+ * import { EmbedJsx } from '@sapphire/embed-jsx';
+ *
+ * const embed = (
+ *   <embed color="RED">
+ * 	   <title>New Embed</title>
+ * 	   <description>Hello!</description>
+ *   </embed>
+ * )
+ * ```
+ */
 // eslint-disable-next-line @typescript-eslint/no-namespace
 export namespace StarEmbed {
-	export function make(type: typeof EMBED_TYPES[number], ...data: EmbedInformation | EmbedInitialInformation): MessageEmbedOptions | MessageEmbed {
-		// console.log(type, data);
+	/**
+	 * The behind the scenes function that TS uses to turn JSX into proper JS
+	 * @param type The embed type being created
+	 * @param data The data emitted along with
+	 * @returns The embed defined with jsx
+	 */
+	export function make(type: typeof EMBED_TYPES[number], ...data: EmbedInformation | EmbedInitialInformation): EmbedData | MessageEmbed {
+		type = type.toLowerCase() as typeof EMBED_TYPES[number];
 		if (!EMBED_TYPES.includes(type)) throw new TypeError(`Invalid type passed, expected one of ${EMBED_TYPES.join(', ')}, got: ${type}`);
 		switch (type) {
 			case 'embed': {
 				const info = data as EmbedInitialInformation;
-				let embedInfo: MessageEmbedOptions = {};
+				let embed = new MessageEmbed(info[0] ?? {});
+				info.shift();
 				for (const value of info) {
-					if ('fields' in value) {
-						if (!Array.isArray(embedInfo)) {
-							embedInfo.fields = [];
-						}
-						embedInfo.fields!.push(...(value as MessageEmbedOptions).fields!);
-						continue;
-					}
-					embedInfo = { ...value, ...embedInfo };
+					embed = resolveData((value as EmbedData) ?? [TsxTypes.Empty], embed);
 				}
-				// console.log(embedInfo);
-				return new MessageEmbed(embedInfo);
+				return embed;
 			}
 			case 'title': {
 				const info = data as TitleInformation;
-				return { title: info[1] };
+				return [TsxTypes.Title, info[1]];
 			}
 			case 'field': {
 				const info = data as FieldInformation;
-				return { fields: [{ name: info[0].title ?? '', inline: info[0].inline ?? false, value: info[1] }] };
+				return [TsxTypes.Field, info[0].title ?? '\u200B', info[1], info[0].inline ?? false];
 			}
 			case 'footer': {
 				const info = data as FooterInformation;
-				return {
-					footer: info[0] === null ? { text: info[1] } : { proxyIconURL: info[0].proxyIconURL, iconURL: info[0].iconURL, text: info[1] }
-				};
+				return [TsxTypes.Footer, info[1], info[0]?.iconURL];
 			}
 			case 'timestamp': {
 				const info = data as TimestampInformation;
-				return { timestamp: info[1] === null ? Date.now() : new Date(info[1]) };
+				return [TsxTypes.Timestamp, new Date(info[1] ?? Date.now())];
 			}
 			case 'description': {
 				const info = data as DescriptionInformation;
-				return { description: info[1] };
+				return [TsxTypes.Description, info[1]];
 			}
 			case 'url': {
 				const info = data as UrlInformation;
-				return { url: info[1] };
+				return [TsxTypes.Url, info[1]];
+			}
+			case 'image': {
+				const info = data as ImageInformation;
+				return [TsxTypes.Image, info[0].url];
+			}
+		}
+	}
+
+	function resolveData(data: EmbedData, embed: MessageEmbed): MessageEmbed {
+		switch (data[0]) {
+			case TsxTypes.Title: {
+				return embed.setTitle(data[1]);
+			}
+			case TsxTypes.Description: {
+				return embed.setDescription(data[1]);
+			}
+			case TsxTypes.Field: {
+				return embed.addField(data[1], data[2], data[3]);
+			}
+			case TsxTypes.Footer: {
+				return embed.setFooter(data[1], data[2]);
+			}
+			case TsxTypes.Timestamp: {
+				return embed.setTimestamp(data[1]);
+			}
+			case TsxTypes.Url: {
+				return embed.setURL(data[1]);
+			}
+			case TsxTypes.Image: {
+				return embed.setImage(data[1]);
+			}
+			case TsxTypes.Empty: {
+				return embed;
 			}
 		}
 	}

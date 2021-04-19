@@ -17,3 +17,5 @@ docs.json
 test.js
 config.ts
 !config.example.ts
+
+minified/

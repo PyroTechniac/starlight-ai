@@ -6,8 +6,9 @@
         "baseUrl": ".",
         "composite": true,
         "jsx": "react",
-        "jsxFactory": "StarEmbed.make",
-        "noImplicitAny": false
+        "jsxFactory": "EmbedJsx.make",
+        "noImplicitAny": false,
+		"isolatedModules": true
     },
     "include": [
         ".",

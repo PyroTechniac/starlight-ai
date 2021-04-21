@@ -1,4 +1,4 @@
-import { SapphireClient } from '@sapphire/framework';
+import type { SapphireClient } from '@sapphire/framework';
 import { Time } from 'lib/utils/types';
 import fetch, { RequestInit, Response } from 'node-fetch';
 import type { FetchManager } from './FetchManager';

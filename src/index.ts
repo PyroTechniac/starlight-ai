@@ -1,6 +1,7 @@
 import { LogLevel } from '@sapphire/framework';
 import { Intents } from 'discord.js';
 import { noop } from './lib/utils';
+import { join } from 'path';
 import '@sapphire/plugin-logger/register';
 import 'reflect-metadata';
 
@@ -15,7 +16,8 @@ const client = new StarlightClient({
 	defaultPrefix: 's!',
 	caseInsensitiveCommands: true,
 	regexPrefix: /^(hey +)?starlight[,! ]/,
-	shards: 'auto'
+	shards: 'auto',
+	baseUserDirectory: join(__dirname)
 });
 
 const main = async (): Promise<void> => {

@@ -1,5 +1,5 @@
 import Collection from '@discordjs/collection';
-import { SapphireClient } from '@sapphire/framework';
+import type { SapphireClient } from '@sapphire/framework';
 import { TimerManager } from '@sapphire/time-utilities';
 import { URL } from 'url';
 import { ContentNode, ContentNodeJSON } from './ContentNode';

@@ -1,8 +1,7 @@
 import esbuild from 'esbuild';
-import { opendir } from 'node:fs/promises';
+import { opendir, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
-import { URL } from 'node:url';
-
+import {writeFileSync} from 'fs';
 
 async function* scan(path, cb) {
 	const dir = await opendir(path);
@@ -17,7 +16,8 @@ async function* scan(path, cb) {
 	}
 }
 
-const folder = new URL('./src', import.meta.url);
+// const folder = new URL('../src', import.meta.url);
+const folder = join(process.cwd(), 'src');
 const regexp = /\.(?:t|j)sx?$/;
 const cb = (path) => regexp.test(path);
 
@@ -30,15 +30,15 @@ for await (const path of scan(folder, cb)) {
 }
 console.timeEnd('scan');
 console.time('build');
-await esbuild.build({
+const result = await esbuild.build({
 	entryPoints: files,
 	format: 'cjs',
 	write: true,
-	outdir: join(process.cwd(), '..', 'dist'),
+	outdir: join(process.cwd(), 'dist'),
 	platform: 'node',
-	tsconfig: join(process.cwd(), '..', 'src', 'tsconfig.json'),
+	tsconfig: join(process.cwd(), 'src', 'tsconfig.json'),
 	sourcemap: true,
-	minifyIdentifiers: true,
-	minifySyntax: true
+	metafile: true
 });
 console.timeEnd('build');
+writeFileSync(join(process.cwd(), 'dist', 'meta.json'), JSON.stringify(result.metafile, null, 4));

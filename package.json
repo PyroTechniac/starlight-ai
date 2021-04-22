@@ -6,7 +6,7 @@
     "scripts": {
         "start": "node --enable-source-maps .",
         "build": "tsc -b src",
-        "minify": "node ./build.mjs",
+        "minify": "node ./scripts/build.mjs",
         "test": "node ./dist/test.js",
         "lint": "eslint --fix src --ext js,ts"
     },

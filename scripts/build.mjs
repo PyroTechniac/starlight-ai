@@ -1,7 +1,7 @@
 import esbuild from 'esbuild';
 import { opendir, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
-import {writeFileSync} from 'fs';
+import { writeFileSync } from 'fs';
 
 async function* scan(path, cb) {
 	const dir = await opendir(path);
@@ -32,13 +32,14 @@ console.timeEnd('scan');
 console.time('build');
 const result = await esbuild.build({
 	entryPoints: files,
-	format: 'cjs',
+	format: 'esm',
 	write: true,
 	outdir: join(process.cwd(), 'dist'),
 	platform: 'node',
 	tsconfig: join(process.cwd(), 'src', 'tsconfig.json'),
 	sourcemap: true,
-	metafile: true
+	metafile: true,
+	sourcesContent: false
 });
 console.timeEnd('build');
 writeFileSync(join(process.cwd(), 'dist', 'meta.json'), JSON.stringify(result.metafile, null, 4));

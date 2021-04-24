@@ -1,15 +1,17 @@
 import { LogLevel } from '@sapphire/framework';
 import { Intents } from 'discord.js';
-import { noop } from './lib/utils';
-import { join } from 'path';
+import { noop } from './lib/utils/index.js';
+import { join } from 'node:path';
 import '@sapphire/plugin-logger/register';
 import 'reflect-metadata';
 
-import { StarlightClient } from './lib/Client';
-import { BOT_TOKEN } from './config';
+import { StarlightClient } from './lib/Client.js';
+import { BOT_TOKEN } from './config.js';
 
 const client = new StarlightClient({
-	intents: Intents.ALL,
+	ws: {
+		intents: Intents.ALL
+	},
 	logger: {
 		level: LogLevel.Trace
 	},
@@ -17,7 +19,7 @@ const client = new StarlightClient({
 	caseInsensitiveCommands: true,
 	regexPrefix: /^(hey +)?starlight[,! ]/,
 	shards: 'auto',
-	baseUserDirectory: join(__dirname)
+	baseUserDirectory: join(process.cwd(), 'dist')
 });
 
 const main = async (): Promise<void> => {

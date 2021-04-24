@@ -1,5 +1,5 @@
 import { SapphireClient } from '@sapphire/framework';
-import { FetchManager } from './structures/FetchManager';
+import { FetchManager } from './structures/FetchManager.js';
 
 export class StarlightClient extends SapphireClient {
 	public fetch: FetchManager = new FetchManager(this);

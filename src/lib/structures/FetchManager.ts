@@ -22,7 +22,10 @@ export class FetchManager extends Collection<string, ContentImports.ContentNode>
 		return super.set(url, node);
 	}
 
-	public sweep(fn: (value: ContentImports.ContentNode, key: string, collection: this) => boolean = (cn): boolean => cn.expired, thisArg?: any): number {
+	public sweep(
+		fn: (value: ContentImports.ContentNode, key: string, collection: this) => boolean = (cn): boolean => cn.expired,
+		thisArg?: any
+	): number {
 		const amount = super.sweep(fn, thisArg);
 
 		if (this.size === 0) {

@@ -105,7 +105,9 @@ export class ContentNode {
 		const { url, options, type } = node;
 		const controller = new AbortController();
 		const timeout = TimerManager.setTimeout((): void => controller.abort(), 30000);
-		const result: nodeFetch.Response = await nodeFetch.default(url, { ...options, signal: controller.signal }).finally((): void => TimerManager.clearTimeout(timeout));
+		const result: nodeFetch.Response = await nodeFetch
+			.default(url, { ...options, signal: controller.signal })
+			.finally((): void => TimerManager.clearTimeout(timeout));
 		if (!result.ok) throw new FetchError(url, result.status, await result.clone().text());
 
 		switch (type) {

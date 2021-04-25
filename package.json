@@ -7,7 +7,9 @@
 	"scripts": {
 		"start": "node .",
 		"build": "tsc -b src",
-		"minify": "node ./scripts/build.mjs",
+		"minify": "yarn minify-dev",
+		"minify-dev": "node ./scripts/build/dev.mjs",
+		"minify-prod": "node ./scripts/build/prod.mjs",
 		"test": "node ./dist/test.js",
 		"lint": "eslint --fix src --ext js,ts"
 	},

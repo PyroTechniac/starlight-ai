@@ -10,7 +10,9 @@ import * as DJSUtils from '@sapphire/discord.js-utilities';
 export default class extends Framework.Command {
 	public async run(message: Message): Promise<Message> {
 		const msg = await message.channel.send('Ping?');
-		const handler = new DJSUtils.MessagePrompter('Are you sure you want to continue?', DJSUtils.MessagePrompterStrategies.Confirm, { explicitReturn: true });
+		const handler = new DJSUtils.MessagePrompter('Are you sure you want to continue?', DJSUtils.MessagePrompterStrategies.Confirm, {
+			explicitReturn: true
+		});
 
 		const result = (await handler.run(message.channel, message.author)) as DJSUtils.IMessagePrompterExplicitConfirmReturn;
 

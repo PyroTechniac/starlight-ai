@@ -6,17 +6,17 @@
 	"type": "module",
 	"scripts": {
 		"start": "node .",
-		"build": "tsc -b src",
-		"minify": "yarn minify-dev",
-		"minify-dev": "node ./scripts/build/dev.mjs",
-		"minify-prod": "node ./scripts/build/prod.mjs",
+		"typecheck": "tsc -b src",
+		"build": "yarn build-dev",
+		"build-dev": "node ./scripts/build/dev.mjs",
+		"build-prod": "node ./scripts/build/prod.mjs",
 		"test": "node ./dist/test.js",
 		"lint": "eslint --fix src --ext js,ts"
 	},
 	"dependencies": {
 		"@discordjs/collection": "^0.1.6",
 		"@sapphire/decorators": "^2.0.10",
-		"@sapphire/embed-jsx": "^1.0.0",
+		"@sapphire/embed-jsx": "sapphire-community/utilities#build-embed-jsx",
 		"@sapphire/framework": "^1.0.0",
 		"@sapphire/plugin-logger": "^1.0.10",
 		"@sapphire/time-utilities": "^1.2.13",

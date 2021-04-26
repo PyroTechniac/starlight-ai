@@ -1,12 +1,12 @@
 import { LogLevel } from '@sapphire/framework';
 import { Intents } from 'discord.js';
-import { noop } from './lib/utils/index.js';
 import { join } from 'node:path';
 import '@sapphire/plugin-logger/register';
 import 'reflect-metadata';
 
 import { StarlightClient } from './lib/Client.js';
 import { BOT_TOKEN } from './config.js';
+import { noop } from 'lib/utils/index.js';
 
 const client = new StarlightClient({
 	ws: {

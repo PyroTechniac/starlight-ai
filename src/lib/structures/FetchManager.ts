@@ -57,6 +57,13 @@ export class FetchManager extends Collection<string, ContentImports.ContentNode>
 		return this.map((node): ContentImports.ContentNodeJSON => node.toJSON());
 	}
 
+	public async *[Symbol.asyncIterator](): AsyncIterableIterator<ContentImports.ContentNode> {
+		for (const node of this.values()) {
+			await node.fetch();
+			yield node;
+		}
+	}
+
 	public static get [Symbol.species](): MapConstructor {
 		return (Collection as unknown) as MapConstructor;
 	}

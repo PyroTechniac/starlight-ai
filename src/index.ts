@@ -10,7 +10,6 @@ import { StarlightClient } from './lib/Client.js';
 import { BOT_TOKEN } from './config.js';
 import { noop, helpUsagePostProcessor } from './lib/utils/index.js';
 
-
 const client = new StarlightClient({
 	ws: {
 		intents: Intents.ALL

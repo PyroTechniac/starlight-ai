@@ -1,4 +1,4 @@
-//#region Enums
+// #region Enums
 
 export const enum Time {
 	Millisecond = 1,
@@ -9,9 +9,9 @@ export const enum Time {
 	Year = Day * 365
 }
 
-//#endregion Enums
+// #endregion Enums
 
-//#region Interfaces
+// #region Interfaces
 
 export interface Resolvable<V> {
 	resolve(): V | Promise<V>;
@@ -22,4 +22,4 @@ export interface File {
 	file: Buffer;
 }
 
-//#endregion Interfaces
+// #endregion Interfaces

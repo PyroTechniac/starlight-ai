@@ -10,7 +10,7 @@ export interface AssetOptions extends Pieces.PieceOptions {
 	filepath?: string;
 }
 
-export abstract class Asset extends Pieces.Piece implements Resolvable<MessageAttachment>{
+export abstract class Asset extends Pieces.Piece implements Resolvable<MessageAttachment> {
 	public filename: string;
 
 	public filepath: string;
@@ -18,7 +18,7 @@ export abstract class Asset extends Pieces.Piece implements Resolvable<MessageAt
 	/* eslint-disable @typescript-eslint/explicit-member-accessibility */
 	#raw: null | Buffer = null;
 
-	#initialized: boolean = false;
+	#initialized = false;
 	/* eslint-enable @typescript-eslint/explicit-member-accessibility */
 
 	public constructor(context: Pieces.PieceContext, options: AssetOptions = {}) {
@@ -36,7 +36,7 @@ export abstract class Asset extends Pieces.Piece implements Resolvable<MessageAt
 		return {
 			name: this.filename,
 			file: this.#raw
-		}
+		};
 	}
 
 	public resolve(): MessageAttachment {
@@ -55,7 +55,7 @@ export abstract class Asset extends Pieces.Piece implements Resolvable<MessageAt
 			filepath: this.filepath,
 			filename: this.filename,
 			file: this.#raw
-		}
+		};
 	}
 
 	public static get basePath(): string {

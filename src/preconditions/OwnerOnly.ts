@@ -1,4 +1,4 @@
-import * as Framework from '@sapphire/framework'
+import * as Framework from '@sapphire/framework';
 import { OWNERS } from '../config.js';
 import type { Message } from 'discord.js';
 

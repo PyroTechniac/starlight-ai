@@ -1,5 +1,5 @@
-import type { PostProcessorModule } from "i18next";
-import { join } from "node:path";
+import type { PostProcessorModule } from 'i18next';
+import { join } from 'node:path';
 
 export const noop = (): null => null;
 
@@ -13,4 +13,4 @@ export const helpUsagePostProcessor: PostProcessorModule = {
 	process(value, [key]): string {
 		return value === key ? '' : value;
 	}
-}
+};

@@ -7,15 +7,14 @@ import type { ClientOptions } from 'discord.js';
 export class StarlightClient extends Framework.SapphireClient {
 	public fetch: FetchManager = new FetchManager(this);
 
-	public fetchLanguage = (): string => 'en-US';
-
 	public constructor(options: ClientOptions) {
 		super(options);
 
 		this.stores.register(new AssetStore().registerPath(join(process.cwd(), 'dist', 'assets')));
 	}
-}
 
+	public fetchLanguage = (): string => 'en-US';
+}
 
 declare module 'discord.js' {
 	interface Client {
@@ -25,6 +24,6 @@ declare module 'discord.js' {
 
 declare module '@sapphire/framework' {
 	interface StoreRegistryEntries {
-		assets: AssetStore
+		assets: AssetStore;
 	}
 }

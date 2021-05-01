@@ -1,7 +1,7 @@
 import esbuild from 'esbuild';
 import { opendir, writeFile } from 'node:fs/promises';
-import { join } from 'node:path';
-import { writeFileSync } from 'fs';
+import { join, extname } from 'node:path';
+import { copy } from 'fs-nextra';
 
 const PROD_OPTIONS = {
 	minify: true,
@@ -26,11 +26,17 @@ async function* scan(path, cb) {
 	}
 }
 
+async function copyLanguages(base) {
+	for await (const file of scan(base, (fi) => extname(fi) === '.json')) {
+		await copy(file, file.replace(/src/g, 'dist'));
+	}
+}
+
 const DIST = join(process.cwd(), 'dist');
 const SRC = join(process.cwd(), 'src');
 
 const folder = SRC;
-const regexp = /\.(?:t|j)sx?$/;
+const regexp = /\.(?:t|j)s?$/;
 const cb = (path) => regexp.test(path);
 
 export default async function minify(env) {
@@ -67,6 +73,9 @@ export default async function minify(env) {
 	console.time('build');
 	const result = await esbuild.build(buildOptions);
 	console.timeEnd('build');
+	console.time('languageCopy');
+	await copyLanguages(SRC);
+	console.timeEnd('languageCopy');
 	console.time('meta');
 	await writeFile(join(DIST, `meta-${env}.json`), JSON.stringify(result.metafile, null, 4));
 	console.timeEnd('meta');

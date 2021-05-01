@@ -7,6 +7,8 @@ import type { ClientOptions } from 'discord.js';
 export class StarlightClient extends Framework.SapphireClient {
 	public fetch: FetchManager = new FetchManager(this);
 
+	public fetchLanguage = (): string => 'en-US';
+
 	public constructor(options: ClientOptions) {
 		super(options);
 

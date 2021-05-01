@@ -2,11 +2,14 @@ import { LogLevel } from '@sapphire/framework';
 import { Intents } from 'discord.js';
 import { join } from 'node:path';
 import '@sapphire/plugin-logger/register';
+import '@sapphire/plugin-i18next/register-discordjs';
 import 'reflect-metadata';
+import i18next from 'i18next';
 
 import { StarlightClient } from './lib/Client.js';
 import { BOT_TOKEN } from './config.js';
-import { noop } from 'lib/utils/index.js';
+import { noop, helpUsagePostProcessor } from './lib/utils/index.js';
+
 
 const client = new StarlightClient({
 	ws: {
@@ -23,6 +26,7 @@ const client = new StarlightClient({
 });
 
 const main = async (): Promise<void> => {
+	i18next.use(helpUsagePostProcessor);
 	try {
 		client.logger.info('Logging in');
 		await client.login(BOT_TOKEN);

@@ -1,5 +1,6 @@
 import type { PostProcessorModule } from 'i18next';
 import { join } from 'node:path';
+import type { ReferredPromise } from './types';
 
 export const noop = (): null => null;
 
@@ -14,3 +15,15 @@ export const helpUsagePostProcessor: PostProcessorModule = {
 		return value === key ? '' : value;
 	}
 };
+
+export function createReferPromise<T>(): ReferredPromise<T> {
+	let resolve: ((value: T) => void) | undefined = undefined;
+	let reject: ((error?: Error) => void) | undefined = undefined;
+	const promise: Promise<T> = new Promise((res, rej) => {
+		resolve = res;
+		reject = rej;
+	});
+
+	// noinspection JSUnusedAssignment
+	return { promise, resolve: resolve!, reject: reject! };
+}

@@ -80,6 +80,11 @@
     "@nodelib/fs.scandir" "2.1.4"
     fastq "^1.6.0"
 
+"@sapphire/async-queue@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@sapphire/async-queue/-/async-queue-1.1.0.tgz#876a7dcd641717f2be2f61e98df5b9964b09748a"
+  integrity sha512-aXUhrehmf13o5cucIVXZwNzt/Nq+09v+uMa58o2XfoJb+tkKNsvZ6RYekt+94NUHk2O/PRkew5bsJvuw8gc+ug==
+
 "@sapphire/decorators@^2.0.10":
   version "2.0.10"
   resolved "https://registry.yarnpkg.com/@sapphire/decorators/-/decorators-2.0.10.tgz#1278ddf8bf95d6fb935473702dbb07420160849f"
@@ -174,6 +179,13 @@
     colorette "^1.2.2"
     tslib "^2.1.0"
 
+"@sapphire/plugin-subcommands@^1.0.4":
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/@sapphire/plugin-subcommands/-/plugin-subcommands-1.0.4.tgz#5578b9411e7060e3bb67f7d9c59cbb9819540869"
+  integrity sha512-4iliQbGZPYLR4x1EMWU72mB2vaoNYsuCg04NArPgiLZqXutjViIZVCQ0xFukYgFCOnmX6gIWA2DJR192ZxJQYQ==
+  dependencies:
+    tslib "^2.2.0"
+
 "@sapphire/prettier-config@^1.0.9":
   version "1.0.9"
   resolved "https://registry.yarnpkg.com/@sapphire/prettier-config/-/prettier-config-1.0.9.tgz#0c97f001bd0e83f7a6e36f49effbbd36b3c25eb8"
@@ -222,6 +234,13 @@
   version "1.5.0"
   resolved "https://registry.yarnpkg.com/@sapphire/utilities/-/utilities-1.5.0.tgz#8ab8001219668e3a9db65e13d7305aec3b838e9b"
   integrity sha512-lgWjTsy9Dsl21zy4mAzZcftOhijWVq2Gok/aFfS8f3Jue5DC7jSTlJoyEypo9ihbLXHpl8ceIUlRPkMiXcaxIw==
+
+"@types/i18next-fs-backend@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@types/i18next-fs-backend/-/i18next-fs-backend-1.0.0.tgz#3fb0374f4d376375b7cc1d3729bca663d104fa64"
+  integrity sha512-PotQ0NE17NavxXCsdyq9qIKZQOB7+A5O/2nDdvfbfm6/IgvvC1YUO6hxK3nIHASu+QGjO1QV5J8PJw4OL12LMQ==
+  dependencies:
+    i18next "^19.7.0"
 
 "@types/json-schema@^7.0.3":
   version "7.0.7"
@@ -872,7 +891,7 @@ i18next-fs-backend@^1.1.1:
   resolved "https://registry.yarnpkg.com/i18next-fs-backend/-/i18next-fs-backend-1.1.1.tgz#1d8028926803f63784ffa0f2b1478fb369f92735"
   integrity sha512-RFkfy10hNxJqc7MVAp5iAZq0Tum6msBCNebEe3OelOBvrROvzHUPaR8Qe10RQrOGokTm0W4vJGEJzruFkEt+hQ==
 
-i18next@^19.9.2:
+i18next@^19.7.0, i18next@^19.9.2:
   version "19.9.2"
   resolved "https://registry.yarnpkg.com/i18next/-/i18next-19.9.2.tgz#ea5a124416e3c5ab85fddca2c8e3c3669a8da397"
   integrity sha512-0i6cuo6ER6usEOtKajUUDj92zlG+KArFia0857xxiEHAQcUwh/RtOQocui1LPJwunSYT574Pk64aNva1kwtxZg==

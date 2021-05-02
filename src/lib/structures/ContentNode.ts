@@ -8,18 +8,6 @@ import { FetchError } from './errors/FetchError.js';
 
 export type FetchTypes = 'json' | 'buffer' | 'result' | 'text';
 
-export interface ContentNodeJSON {
-	url: string;
-	createdAt: number;
-	type: FetchTypes;
-	options: nodeFetch.RequestInit;
-}
-
-export interface ContentNodeContext {
-	manager: FetchManager;
-	url: string;
-}
-
 export class ContentNode {
 	public type: FetchTypes = 'json';
 
@@ -35,7 +23,7 @@ export class ContentNode {
 
 	#timeout = Date.now() + Time.Minute * 15; // eslint-disable-line @typescript-eslint/explicit-member-accessibility
 
-	public constructor(context: ContentNodeContext) {
+	public constructor(context: ContentNode.Context) {
 		this.manager = context.manager;
 		this.url = context.url;
 	}
@@ -92,7 +80,7 @@ export class ContentNode {
 		return `ContentNode(${this.url})`;
 	}
 
-	public toJSON(): ContentNodeJSON {
+	public toJSON(): ContentNode.NodeJSON {
 		return {
 			url: this.url,
 			type: this.type,
@@ -122,5 +110,19 @@ export class ContentNode {
 			default:
 				throw new TypeError(`Invalid fetch type: ${type}`);
 		}
+	}
+}
+
+export namespace ContentNode {
+	export interface NodeJSON {
+		url: string;
+		createdAt: number;
+		type: FetchTypes;
+		options: nodeFetch.RequestInit;
+	}
+
+	export interface Context {
+		manager: FetchManager;
+		url: string;
 	}
 }

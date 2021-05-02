@@ -22,4 +22,10 @@ export interface File {
 	file: Buffer;
 }
 
+export interface ReferredPromise<V> {
+	promise: Promise<V>;
+	resolve(value?: V): void;
+	reject(error?: Error): void;
+}
+
 // #endregion Interfaces

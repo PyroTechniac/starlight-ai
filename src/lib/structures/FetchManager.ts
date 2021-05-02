@@ -2,10 +2,10 @@ import Collection from '@discordjs/collection';
 import type { SapphireClient } from '@sapphire/framework';
 import { TimerManager } from '@sapphire/time-utilities';
 import { URL } from 'node:url';
-import * as ContentImports from './ContentNode.js';
+import { ContentNode } from './ContentNode.js';
 
-export class FetchManager extends Collection<string, ContentImports.ContentNode> {
-	public readonly fetchMap = new WeakMap<ContentImports.ContentNode, Promise<ContentImports.ContentNode>>();
+export class FetchManager extends Collection<string, ContentNode> {
+	public readonly fetchMap = new WeakMap<ContentNode, Promise<ContentNode>>();
 
 	#sweepInterval: null | NodeJS.Timer = null; // eslint-disable-line @typescript-eslint/explicit-member-accessibility
 
@@ -13,19 +13,16 @@ export class FetchManager extends Collection<string, ContentImports.ContentNode>
 		super();
 	}
 
-	public acquire(url: string): ContentImports.ContentNode {
+	public acquire(url: string): ContentNode {
 		return this.get(url) ?? this.create(url);
 	}
 
-	public set(url: string, node: ContentImports.ContentNode): this {
+	public set(url: string, node: ContentNode): this {
 		if (this.#sweepInterval === null) this.#sweepInterval = TimerManager.setInterval(this.sweep.bind(this), 30000);
 		return super.set(url, node);
 	}
 
-	public sweep(
-		fn: (value: ContentImports.ContentNode, key: string, collection: this) => boolean = (cn): boolean => cn.expired,
-		thisArg?: any
-	): number {
+	public sweep(fn: (value: ContentNode, key: string, collection: this) => boolean = (cn): boolean => cn.expired, thisArg?: any): number {
 		const amount = super.sweep(fn, thisArg);
 
 		if (this.size === 0) {
@@ -36,28 +33,28 @@ export class FetchManager extends Collection<string, ContentImports.ContentNode>
 		return amount;
 	}
 
-	public create(url: string): ContentImports.ContentNode {
+	public create(url: string): ContentNode {
 		try {
 			new URL(url);
 		} catch {
 			throw new Error('Invalid url provided');
 		}
 
-		const node = new ContentImports.ContentNode({ manager: this, url });
+		const node = new ContentNode({ manager: this, url });
 		this.set(url, node);
 
 		return node;
 	}
 
-	public async fetch(force?: boolean): Promise<ContentImports.ContentNode[]> {
-		return Promise.all(this.map((node): Promise<ContentImports.ContentNode> => node.fetch(force)));
+	public async fetch(force?: boolean): Promise<ContentNode[]> {
+		return Promise.all(this.map((node): Promise<ContentNode> => node.fetch(force)));
 	}
 
-	public toJSON(): ContentImports.ContentNodeJSON[] {
-		return this.map((node): ContentImports.ContentNodeJSON => node.toJSON());
+	public toJSON(): ContentNode.NodeJSON[] {
+		return this.map((node): ContentNode.NodeJSON => node.toJSON());
 	}
 
-	public async *[Symbol.asyncIterator](): AsyncIterableIterator<ContentImports.ContentNode> {
+	public async *[Symbol.asyncIterator](): AsyncIterableIterator<ContentNode> {
 		for (const node of this.values()) {
 			await node.fetch();
 			yield node;

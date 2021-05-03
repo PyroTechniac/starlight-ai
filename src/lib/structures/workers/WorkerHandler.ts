@@ -5,7 +5,7 @@ import { URL } from 'node:url';
 import { cyan, yellow, green, red } from 'colorette';
 import { Store } from '@sapphire/framework';
 import { once } from 'node:events';
-import type { IncomingPayload, NoId, OutgoingPayload } from './types.js';
+import * as WorkerTypes from './types.js';
 
 export class WorkerHandler {
 	public lastHeartBeat!: number;
@@ -24,7 +24,7 @@ export class WorkerHandler {
 		return this.queue.remaining;
 	}
 
-	public async send(data: NoId<IncomingPayload>, delay: number | null = null): Promise<OutgoingPayload> {
+	public async send(data: WorkerTypes.NoId<WorkerTypes.IncomingPayload>, delay: number | null = null): Promise<WorkerTypes.OutgoingPayload> {
 		await this.queue.wait();
 
 		try {
@@ -52,6 +52,7 @@ export class WorkerHandler {
 		this.online = false;
 		this.lastHeartBeat = 0;
 		this.worker = new Worker(WorkerHandler.filename)
+			.on('message', (message: WorkerTypes.OutgoingPayload): void => this.handleMessage(message))
 			.once('online', (): void => this.handleOnline())
 			.once('exit', (code): void => this.handleExit(code));
 		return this;
@@ -61,8 +62,17 @@ export class WorkerHandler {
 		if (!this.online) await once(this.worker, 'online');
 	}
 
-	public async destroy(): Promise<number> {
-		return this.worker.terminate();
+	public async destroy(): Promise<void> {
+		await this.worker.terminate();
+	}
+
+	private handleMessage(message: WorkerTypes.OutgoingPayload): void {
+		if (message.type === WorkerTypes.OutgoingType.Heartbeat) {
+			this.lastHeartBeat = Date.now();
+			return;
+		}
+
+		this.response.resolve(message.id, message);
 	}
 
 	private generateID(): number {

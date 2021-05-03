@@ -9,7 +9,6 @@ import { config } from 'dotenv';
 
 config();
 
-
 import { StarlightClient } from './lib/Client.js';
 import { noop, helpUsagePostProcessor, rootFolder } from './lib/utils/index.js';
 import { EnvLoader } from './lib/utils/EnvLoader.js';

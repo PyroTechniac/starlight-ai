@@ -3,7 +3,7 @@ import * as Framework from '@sapphire/framework';
 
 @ApplyOptions<Framework.EventOptions>({
 	once: true,
-	name: 'ready'
+	event: Framework.Events.Ready
 })
 export default class extends Framework.Event {
 	public run(): void {

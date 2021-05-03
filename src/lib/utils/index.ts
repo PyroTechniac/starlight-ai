@@ -1,5 +1,5 @@
 import type { PostProcessorModule } from 'i18next';
-import {URL, fileURLToPath} from 'node:url';
+import { URL, fileURLToPath } from 'node:url';
 import type { ReferredPromise } from './types';
 
 export const noop = (): null => null;

@@ -29,6 +29,7 @@ export class StarlightClient extends Framework.SapphireClient {
 declare module 'discord.js' {
 	interface Client {
 		fetch: FetchManager;
+		readonly context: PieceContextExtras;
 	}
 }
 
@@ -41,6 +42,6 @@ declare module '@sapphire/framework' {
 declare module '@sapphire/pieces' {
 	interface PieceContextExtras {
 		workers: WorkerManager;
-		env: EnvLoader
+		env: EnvLoader;
 	}
 }

@@ -1,9 +1,11 @@
+import { Store } from '@sapphire/framework';
 import * as Pieces from '@sapphire/pieces';
 import { MessageAttachment } from 'discord.js';
-import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { noop, rootFolder } from '../utils/index.js';
 import type { File, Resolvable } from '../utils/types.js';
+import { IncomingType } from './workers/types.js';
+import { isNullish } from '@sapphire/utilities';
 
 export interface AssetOptions extends Pieces.PieceOptions {
 	filename?: string;
@@ -46,7 +48,8 @@ export abstract class Asset extends Pieces.Piece implements Resolvable<MessageAt
 
 	public async onLoad(): Promise<void> {
 		this.#initialized = true;
-		this.#raw = await readFile(this.filepath).catch(noop);
+		const raw = await Store.injectedContext.workers.send({ type: IncomingType.ReadFile, path: this.filepath }).catch(noop);
+		this.#raw = isNullish(raw) ? null : Buffer.from(raw.data);
 	}
 
 	public toJSON(): Record<string, any> {

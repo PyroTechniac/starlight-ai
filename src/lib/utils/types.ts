@@ -29,3 +29,19 @@ export interface ReferredPromise<V> {
 }
 
 // #endregion Interfaces
+
+// #region Utils
+
+export type CustomGet<K extends string, TCustom> = K & { __custom__: TCustom };
+
+export type CustomFunctionGet<K extends string, TArgs, TReturn> = K & { __args__: TArgs; __return__: TReturn };
+
+export function T<TCustom = string>(k: string): CustomGet<string, TCustom> {
+	return k as CustomGet<string, TCustom>;
+}
+
+export function FT<TArgs, TReturn = string>(k: string): CustomFunctionGet<string, TArgs, TReturn> {
+	return k as CustomFunctionGet<string, TArgs, TReturn>;
+}
+
+// #endregion Utils

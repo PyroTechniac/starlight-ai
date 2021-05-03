@@ -4,6 +4,8 @@ import { AssetStore } from './structures/AssetStore.js';
 import { FetchManager } from './structures/FetchManager.js';
 import type { ClientOptions } from 'discord.js';
 import { WorkerManager } from './structures/workers/WorkerManager.js';
+import { EnvLoader } from './utils/EnvLoader.js';
+import type { PieceContextExtras } from '@sapphire/pieces';
 
 export class StarlightClient extends Framework.SapphireClient {
 	public fetch: FetchManager = new FetchManager(this);
@@ -16,7 +18,7 @@ export class StarlightClient extends Framework.SapphireClient {
 		this.context.workers = new WorkerManager();
 	}
 
-	public get context() {
+	public get context(): PieceContextExtras {
 		return Framework.Store.injectedContext;
 	}
 
@@ -33,8 +35,11 @@ declare module '@sapphire/framework' {
 	interface StoreRegistryEntries {
 		assets: AssetStore;
 	}
+}
 
+declare module '@sapphire/pieces' {
 	interface PieceContextExtras {
-		workers: WorkerManager
+		workers: WorkerManager;
+		env: EnvLoader
 	}
 }

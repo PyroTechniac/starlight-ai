@@ -1,7 +1,6 @@
 import esbuild from 'esbuild';
-import { opendir, writeFile } from 'node:fs/promises';
-import { join, extname } from 'node:path';
-import { copy } from 'fs-nextra';
+import { opendir, writeFile, readdir, mkdir, copyFile } from 'node:fs/promises';
+import { join, extname, dirname, basename } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const PROD_OPTIONS = {
@@ -16,7 +15,6 @@ const DEV_OPTIONS = {
 
 async function* scan(path, cb) {
 	const dir = await opendir(path);
-
 	for await (const item of dir) {
 		const file = join(dir.path, item.name);
 		if (item.isFile()) {
@@ -29,7 +27,14 @@ async function* scan(path, cb) {
 
 async function copyLanguages(base) {
 	for await (const file of scan(base, (fi) => extname(fi) === '.json')) {
-		await copy(file, file.replace(/src/g, 'dist'));
+		if (basename(file) === 'tsconfig.json') continue;
+		const fileDirName = dirname(file).replace(/src/g, 'dist');
+		try {
+			await readdir(fileDirName)
+		} catch {
+			await mkdir(fileDirName, { recursive: true });
+		}
+		await copyFile(file, file.replace(/src/g, 'dist'));
 	}
 }
 

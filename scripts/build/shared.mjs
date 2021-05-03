@@ -2,6 +2,7 @@ import esbuild from 'esbuild';
 import { opendir, writeFile } from 'node:fs/promises';
 import { join, extname } from 'node:path';
 import { copy } from 'fs-nextra';
+import { fileURLToPath } from 'node:url';
 
 const PROD_OPTIONS = {
 	minify: true,
@@ -32,8 +33,10 @@ async function copyLanguages(base) {
 	}
 }
 
-const DIST = join(process.cwd(), 'dist');
-const SRC = join(process.cwd(), 'src');
+const rootFolder = fileURLToPath(new URL('../../', import.meta.url));
+
+const DIST = join(rootFolder, 'dist');
+const SRC = join(rootFolder, 'src');
 
 const folder = SRC;
 const regexp = /\.(?:t|j)s?$/;

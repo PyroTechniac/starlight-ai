@@ -1,7 +1,7 @@
 import { TimerManager } from '@sapphire/time-utilities';
 import { createReferPromise } from '../../utils/index.js';
 import type { ReferredPromise } from '../../utils/types.js';
-import { TimeoutError } from './errors/TimeoutError.js';
+import { TimeoutError } from '../errors/TimeoutError.js';
 import type { OutgoingPayload } from './types.js';
 
 export class ResponseHandler {

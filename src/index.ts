@@ -11,7 +11,7 @@ config();
 
 
 import { StarlightClient } from './lib/Client.js';
-import { noop, helpUsagePostProcessor } from './lib/utils/index.js';
+import { noop, helpUsagePostProcessor, rootFolder } from './lib/utils/index.js';
 import { EnvLoader } from './lib/utils/EnvLoader.js';
 
 Store.injectedContext.env = new EnvLoader();
@@ -26,7 +26,7 @@ const client = new StarlightClient({
 	caseInsensitiveCommands: true,
 	regexPrefix: /^(hey +)?starlight[,! ]/,
 	shards: 'auto',
-	baseUserDirectory: join(process.cwd(), 'dist')
+	baseUserDirectory: join(rootFolder, 'dist')
 });
 
 const main = async (): Promise<void> => {

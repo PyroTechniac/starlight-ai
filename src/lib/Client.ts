@@ -6,6 +6,7 @@ import type { ClientOptions } from 'discord.js';
 import { WorkerManager } from './structures/workers/WorkerManager.js';
 import { EnvLoader } from './utils/EnvLoader.js';
 import type { PieceContextExtras } from '@sapphire/pieces';
+import { rootFolder } from './utils/index.js';
 
 export class StarlightClient extends Framework.SapphireClient {
 	public fetch: FetchManager = new FetchManager(this);
@@ -13,7 +14,7 @@ export class StarlightClient extends Framework.SapphireClient {
 	public constructor(options: ClientOptions) {
 		super(options);
 
-		this.stores.register(new AssetStore().registerPath(join(process.cwd(), 'dist', 'assets')));
+		this.stores.register(new AssetStore().registerPath(join(rootFolder, 'dist', 'assets')));
 
 		this.context.workers = new WorkerManager();
 	}

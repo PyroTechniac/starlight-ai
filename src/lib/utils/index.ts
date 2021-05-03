@@ -1,12 +1,12 @@
 import type { PostProcessorModule } from 'i18next';
-import { join } from 'node:path';
+import {URL, fileURLToPath} from 'node:url';
 import type { ReferredPromise } from './types';
 
 export const noop = (): null => null;
 
 export const filterArray = <V>(array: V[]): V[] => [...new Set(array)];
 
-export const rootFolder = join(process.cwd());
+export const rootFolder = fileURLToPath(new URL('../../../', import.meta.url));
 
 export const helpUsagePostProcessor: PostProcessorModule = {
 	type: 'postProcessor',

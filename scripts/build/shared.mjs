@@ -13,6 +13,11 @@ const DEV_OPTIONS = {
 	sourcesContent: false
 }
 
+const BUNDLE_OPTIONS = {
+	bundle: true,
+	external: ['node:url', 'node:worker_threads', 'node:os', 'node:path', 'node:events', 'node:fs/promises', 'ffmpeg-static']
+}
+
 async function* scan(path, cb) {
 	const dir = await opendir(path);
 	for await (const item of dir) {
@@ -65,7 +70,7 @@ export default async function minify(env) {
 		tsconfig: join(SRC, 'tsconfig.json'),
 		sourcemap: true,
 		metafile: true,
-		splitting: true
+		splitting: true,
 	};
 	switch (env) {
 		case 'production': {
@@ -74,6 +79,10 @@ export default async function minify(env) {
 		}
 		case 'development': {
 			buildOptions = { ...buildOptions, ...DEV_OPTIONS };
+			break;
+		}
+		case 'bundle': {
+			buildOptions = { ...buildOptions, ...BUNDLE_OPTIONS };
 			break;
 		}
 		default: throw new Error('Unreachable');

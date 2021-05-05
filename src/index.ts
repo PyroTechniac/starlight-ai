@@ -4,6 +4,7 @@ import { join } from 'node:path';
 import '@sapphire/plugin-logger/register';
 import '@sapphire/plugin-i18next/register-discordjs';
 import 'reflect-metadata';
+import '@skyra/editable-commands';
 import i18next from 'i18next';
 import { config } from 'dotenv';
 

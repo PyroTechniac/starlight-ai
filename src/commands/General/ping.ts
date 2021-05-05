@@ -1,12 +1,13 @@
 import { ApplyOptions } from '@sapphire/decorators';
-import * as Framework from '@sapphire/framework';
+import type { CommandOptions } from '@sapphire/framework';
 import type { Message } from 'discord.js';
+import { LightCommand } from '../../lib/structures/commands/LightCommand.js';
 
-@ApplyOptions<Framework.CommandOptions>({
+@ApplyOptions<CommandOptions>({
 	description: 'ping pong',
 	enabled: true
 })
-export default class extends Framework.Command {
+export default class extends LightCommand {
 	public async run(message: Message): Promise<Message> {
 		const msg = await message.channel.send('Ping?');
 		return msg.edit(

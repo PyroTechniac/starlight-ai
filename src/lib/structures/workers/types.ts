@@ -5,31 +5,24 @@ export interface IdentifiablePayload {
 export type NoId<T> = Omit<T, 'id'>;
 
 export enum IncomingType {
-	ReadFile
+	Void
 }
 
-export type IncomingPayload = IncomingReadFilePayload;
+export type IncomingPayload = IncomingVoidPayload;
 
-export interface IncomingReadFilePayload extends IdentifiablePayload {
-	type: IncomingType.ReadFile;
-	path: string;
+export interface IncomingVoidPayload extends IdentifiablePayload {
+	type: IncomingType.Void;
 }
 
 export enum OutgoingType {
 	Heartbeat,
-	FileRead,
 	UnknownCommand
 }
 
-export type OutgoingPayload = OutgoingHeartbeatPayload | OutgoingUnknownCommandPayload | OutgoingFileReadPayload;
+export type OutgoingPayload = OutgoingHeartbeatPayload | OutgoingUnknownCommandPayload;
 
 export interface OutgoingHeartbeatPayload {
 	type: OutgoingType.Heartbeat;
-}
-
-export interface OutgoingFileReadPayload extends IdentifiablePayload {
-	type: OutgoingType.FileRead;
-	data: Uint8Array;
 }
 
 export interface OutgoingUnknownCommandPayload extends IdentifiablePayload {

@@ -1,20 +1,16 @@
 import { LogLevel, Store } from '@sapphire/framework';
 import { Intents } from 'discord.js';
-import { join } from 'node:path';
 import '@sapphire/plugin-logger/register';
 import '@sapphire/plugin-i18next/register-discordjs';
 import 'reflect-metadata';
 import '@skyra/editable-commands';
 import i18next from 'i18next';
-import { config } from 'dotenv';
 
-config();
+import './lib/preload';
+import { StarlightClient } from './lib/Client';
+import { noop, helpUsagePostProcessor } from './lib/utils/';
+import { DbManager } from './lib/database/util/DbManager';
 
-import { StarlightClient } from './lib/Client.js';
-import { noop, helpUsagePostProcessor, rootFolder } from './lib/utils/index.js';
-import { EnvLoader } from './lib/utils/EnvLoader.js';
-
-Store.injectedContext.env = new EnvLoader();
 const client = new StarlightClient({
 	ws: {
 		intents: Intents.ALL
@@ -26,12 +22,13 @@ const client = new StarlightClient({
 	caseInsensitiveCommands: true,
 	regexPrefix: /^(hey +)?starlight[,! ]/,
 	shards: 'auto',
-	baseUserDirectory: join(rootFolder, 'dist')
+	baseUserDirectory: __dirname
 });
 
 const main = async (): Promise<void> => {
 	i18next.use(helpUsagePostProcessor);
 	try {
+		Store.injectedContext.db = await DbManager.connect();
 		client.logger.info('Logging in');
 		await client.login(Store.injectedContext.env.parseString('BOT_TOKEN'));
 		client.logger.info('Logged in');

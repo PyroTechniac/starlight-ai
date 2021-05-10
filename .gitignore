@@ -9,13 +9,11 @@ dist/
 docs/
 test-results.xml
 bwd/
-config.json
 
 docs.json
 !.env.example
+cwd/
 
 test.js
-config.ts
-!config.example.ts
 
 minified/

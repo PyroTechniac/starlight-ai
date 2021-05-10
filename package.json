@@ -3,7 +3,6 @@
 	"version": "0.0.1",
 	"main": "./dist/index.js",
 	"license": "MIT",
-	"type": "module",
 	"scripts": {
 		"start": "node .",
 		"typecheck": "tsc -b src",
@@ -16,6 +15,7 @@
 		"lint": "eslint --fix src --ext js,ts"
 	},
 	"dependencies": {
+		"@anatine/esbuild-decorators": "^0.2.8",
 		"@discordjs/collection": "^0.1.6",
 		"@sapphire/async-queue": "^1.1.0",
 		"@sapphire/decorators": "^2.0.10",
@@ -29,12 +29,15 @@
 		"@sapphire/type": "^2.0.2",
 		"@skyra/editable-commands": "^1.0.0",
 		"abort-controller": "^3.0.0",
+		"better-sqlite3": "^7.3.1",
 		"colorette": "^1.2.2",
 		"discord.js": "^12.5.3",
 		"dotenv": "^8.2.0",
 		"i18next": "^20.2.2",
 		"node-fetch": "^2.6.1",
-		"reflect-metadata": "^0.1.13"
+		"reflect-metadata": "^0.1.13",
+		"typeorm": "^0.2.32",
+		"typeorm-naming-strategies": "^2.0.0"
 	},
 	"devDependencies": {
 		"@sapphire/discord.js-utilities": "^1.5.5",
@@ -52,5 +55,8 @@
 		"prettier": "^2.2.1",
 		"typescript": "^4.2.3"
 	},
-	"prettier": "@sapphire/prettier-config"
+	"prettier": "@sapphire/prettier-config",
+	"resolutions": {
+		"node-pre-gyp": "https://registry.yarnpkg.com/@mapbox/node-pre-gyp/-/node-pre-gyp-1.0.4.tgz"
+	}
 }

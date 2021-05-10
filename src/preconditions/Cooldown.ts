@@ -1,17 +1,17 @@
-import * as Framework from '@sapphire/framework';
+import { BucketType, Command, Identifiers, Precondition, PreconditionContext, PreconditionResult } from '@sapphire/framework';
 import { Bucket } from '@sapphire/ratelimits';
 import type { Message } from 'discord.js';
 
-export interface CooldownContext extends Framework.PreconditionContext {
-	bucketType?: Framework.BucketType;
+export interface CooldownContext extends PreconditionContext {
+	bucketType?: BucketType;
 	delay?: number;
 	limit?: number;
 }
 
-export default class extends Framework.Precondition {
-	public buckets = new WeakMap<Framework.Command, Bucket<string>>();
+export default class extends Precondition {
+	public buckets = new WeakMap<Command, Bucket<string>>();
 
-	public run(message: Message, command: Framework.Command, context: CooldownContext): Framework.PreconditionResult {
+	public run(message: Message, command: Command, context: CooldownContext): PreconditionResult {
 		if (context.external) return this.ok();
 
 		if (!context.delay) return this.ok();
@@ -23,7 +23,7 @@ export default class extends Framework.Precondition {
 		return remaining === 0
 			? this.ok()
 			: this.error({
-					identifier: Framework.Identifiers.PreconditionCooldown,
+					identifier: Identifiers.PreconditionCooldown,
 					message: `You have just used this command. Try again in ${Math.ceil(remaining / 1000)} second${remaining > 1000 ? 's' : ''}.`,
 					context: { remaining }
 			  });
@@ -31,18 +31,18 @@ export default class extends Framework.Precondition {
 
 	private getID(message: Message, context: CooldownContext): string {
 		switch (context.bucketType) {
-			case Framework.BucketType.Global:
+			case BucketType.Global:
 				return 'global';
-			case Framework.BucketType.Channel:
+			case BucketType.Channel:
 				return message.channel.id;
-			case Framework.BucketType.Guild:
+			case BucketType.Guild:
 				return message.guild!.id;
 			default:
 				return message.author.id;
 		}
 	}
 
-	private getBucket(command: Framework.Command, context: CooldownContext): Bucket<string> {
+	private getBucket(command: Command, context: CooldownContext): Bucket<string> {
 		let bucket = this.buckets.get(command);
 		if (!bucket) {
 			bucket = new Bucket();

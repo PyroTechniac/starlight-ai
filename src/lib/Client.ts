@@ -1,11 +1,12 @@
-import * as Framework from '@sapphire/framework';
-import { FetchManager } from './structures/FetchManager.js';
+import { SapphireClient, Store } from '@sapphire/framework';
+import { FetchManager } from './structures/FetchManager';
 import type { ClientOptions } from 'discord.js';
-import { WorkerManager } from './structures/workers/WorkerManager.js';
-import { EnvLoader } from './utils/EnvLoader.js';
+import { WorkerManager } from './structures/workers/WorkerManager';
+import { EnvLoader } from './utils';
 import type { PieceContextExtras } from '@sapphire/pieces';
+import type { DbManager } from './database/util/DbManager';
 
-export class StarlightClient extends Framework.SapphireClient {
+export class StarlightClient extends SapphireClient {
 	public fetch: FetchManager = new FetchManager(this);
 
 	public constructor(options: ClientOptions) {
@@ -15,7 +16,7 @@ export class StarlightClient extends Framework.SapphireClient {
 	}
 
 	public get context(): PieceContextExtras {
-		return Framework.Store.injectedContext;
+		return Store.injectedContext;
 	}
 
 	public fetchLanguage = (): string => 'en-US';
@@ -32,5 +33,6 @@ declare module '@sapphire/pieces' {
 	interface PieceContextExtras {
 		workers: WorkerManager;
 		env: EnvLoader;
+		db: DbManager;
 	}
 }

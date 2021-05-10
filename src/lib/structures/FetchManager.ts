@@ -2,7 +2,7 @@ import Collection from '@discordjs/collection';
 import type { SapphireClient } from '@sapphire/framework';
 import { TimerManager } from '@sapphire/time-utilities';
 import { URL } from 'node:url';
-import { ContentNode } from './ContentNode.js';
+import { ContentNode } from './ContentNode';
 
 export class FetchManager extends Collection<string, ContentNode> {
 	public readonly fetchMap = new WeakMap<ContentNode, Promise<ContentNode>>();

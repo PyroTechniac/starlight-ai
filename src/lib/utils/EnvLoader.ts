@@ -1,4 +1,4 @@
-import * as Utils from '@sapphire/utilities';
+import { Nullish, isNullish } from '@sapphire/utilities';
 
 export class EnvLoader {
 	public parseInteger(key: EnvLoader.EnvInteger, defaultValue?: number): number {
@@ -52,8 +52,8 @@ export class EnvLoader {
 		});
 	}
 
-	private isNullishOrEmpty(value: unknown): value is Utils.Nullish | '' {
-		return value === '' || Utils.isNullish(value);
+	private isNullishOrEmpty(value: unknown): value is Nullish | '' {
+		return value === '' || isNullish(value);
 	}
 }
 
@@ -70,7 +70,9 @@ export namespace EnvLoader {
 		NODE_ENV: 'development' | 'production';
 		BOT_TOKEN: string;
 		OWNERS: string;
+		PREFIX: string;
 		WORKER_COUNT: IntegerString;
+		TYPEORM_DEBUG_LOGS: BooleanString;
 	}
 }
 

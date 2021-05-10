@@ -1,10 +1,10 @@
 import type { SapphireClient } from '@sapphire/framework';
-import { Time } from '../utils/types.js';
-import * as nodeFetch from 'node-fetch';
+import { Time } from '../utils';
+import fetch, { RequestInit, Response } from 'node-fetch';
 import type { FetchManager } from './FetchManager';
 import AbortController from 'abort-controller';
 import { TimerManager } from '@sapphire/time-utilities';
-import { FetchError } from './errors/FetchError.js';
+import { FetchError } from './errors/FetchError';
 
 export type FetchTypes = 'json' | 'buffer' | 'result' | 'text';
 
@@ -13,7 +13,7 @@ export class ContentNode {
 
 	public createdTimestamp: number = Date.now();
 
-	public options: nodeFetch.RequestInit = {};
+	public options: RequestInit = {};
 
 	public readonly manager: FetchManager;
 
@@ -71,7 +71,7 @@ export class ContentNode {
 		return this;
 	}
 
-	public setOptions(options: nodeFetch.RequestInit = {}): this {
+	public setOptions(options: RequestInit = {}): this {
 		this.options = { ...this.options, ...options };
 		return this;
 	}
@@ -93,9 +93,7 @@ export class ContentNode {
 		const { url, options, type } = node;
 		const controller = new AbortController();
 		const timeout = TimerManager.setTimeout((): void => controller.abort(), 30000);
-		const result: nodeFetch.Response = await nodeFetch
-			.default(url, { ...options, signal: controller.signal })
-			.finally((): void => TimerManager.clearTimeout(timeout));
+		const result: Response = await fetch(url, { ...options, signal: controller.signal }).finally((): void => TimerManager.clearTimeout(timeout));
 		if (!result.ok) throw new FetchError(url, result.status, await result.clone().text());
 
 		switch (type) {
@@ -118,7 +116,7 @@ export namespace ContentNode {
 		url: string;
 		createdAt: number;
 		type: FetchTypes;
-		options: nodeFetch.RequestInit;
+		options: RequestInit;
 	}
 
 	export interface Context {

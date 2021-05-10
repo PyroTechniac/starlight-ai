@@ -1,15 +1,15 @@
-import { ApplyOptions } from "@sapphire/decorators";
-import type { CommandOptions } from "@sapphire/framework";
-import { Message, MessageAttachment } from "discord.js";
-import { LightCommand } from "../../lib/structures/commands/LightCommand.js";
+import { ApplyOptions } from '@sapphire/decorators';
+import type { CommandOptions } from '@sapphire/framework';
+import { Message, MessageAttachment } from 'discord.js';
+import { LightCommand } from '../../lib/structures/commands/LightCommand';
 import { Stopwatch } from '@sapphire/stopwatch';
-import { Type } from "@sapphire/type";
+import { Type } from '@sapphire/type';
 import { isThenable, codeBlock } from '@sapphire/utilities';
-import { inspect } from "node:util";
+import { inspect } from 'node:util';
 
 @ApplyOptions<CommandOptions>({
 	aliases: ['ev'],
-	description: "Evaluates arbitrary JavaScript. Reserved for bot owner.",
+	description: 'Evaluates arbitrary JavaScript. Reserved for bot owner.',
 	preconditions: ['OwnerOnly']
 })
 export default class extends LightCommand {
@@ -24,7 +24,10 @@ export default class extends LightCommand {
 		return message.send(out.length > 2000 ? await this.getHaste(out).catch(() => new MessageAttachment(Buffer.from(out), 'output.txt')) : out);
 	}
 
-	private async eval(message: Message, code: string): Promise<{
+	private async eval(
+		message: Message,
+		code: string
+	): Promise<{
 		success: boolean;
 		type: Type;
 		time: string;
@@ -72,10 +75,9 @@ export default class extends LightCommand {
 	}
 
 	private async getHaste(result: string): Promise<string> {
-		const { key } = (await this.context.client.fetch.acquire('https://hastebin.skyra.pw/documents')
-			.setOptions({ method: 'POST', body: result })
-			.fetch())
-			.data<{ key: string }>()!;
+		const { key } = (
+			await this.context.client.fetch.acquire('https://hastebin.skyra.pw/documents').setOptions({ method: 'POST', body: result }).fetch()
+		).data<{ key: string }>()!;
 		return `https://hastebin.skyra.pw/${key}.js`;
 	}
 }

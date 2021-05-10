@@ -1,7 +1,7 @@
 import { ApplyOptions } from '@sapphire/decorators';
 import type { CommandOptions } from '@sapphire/framework';
 import type { Message } from 'discord.js';
-import { LightCommand } from '../../lib/structures/commands/LightCommand.js';
+import { LightCommand } from '../../lib/structures/commands/LightCommand';
 
 @ApplyOptions<CommandOptions>({
 	description: 'ping pong',

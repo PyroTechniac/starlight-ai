@@ -1,11 +1,11 @@
 import { ApplyOptions } from '@sapphire/decorators';
-import * as Framework from '@sapphire/framework';
+import { Event, Events, EventOptions } from '@sapphire/framework';
 
-@ApplyOptions<Framework.EventOptions>({
+@ApplyOptions<EventOptions>({
 	once: true,
-	event: Framework.Events.Ready
+	event: Events.Ready
 })
-export default class extends Framework.Event {
+export default class extends Event {
 	public run(): void {
 		this.context.client.id ??= this.context.client.user?.id ?? null;
 	}

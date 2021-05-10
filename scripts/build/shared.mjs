@@ -2,6 +2,7 @@ import esbuild from 'esbuild';
 import { opendir, writeFile, readdir, mkdir, copyFile } from 'node:fs/promises';
 import { join, extname, dirname, basename } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { esbuildDecorators } from '@anatine/esbuild-decorators';
 
 const PROD_OPTIONS = {
 	minify: true,
@@ -15,7 +16,7 @@ const DEV_OPTIONS = {
 
 const BUNDLE_OPTIONS = {
 	bundle: true,
-	external: ['node:url', 'node:worker_threads', 'node:os', 'node:path', 'node:events', 'node:fs/promises', 'ffmpeg-static']
+	external: ['node:url', 'node:worker_threads', 'node:os', 'node:path', 'node:events', 'node:fs/promises', 'node:util', 'ffmpeg-static']
 }
 
 async function* scan(path, cb) {
@@ -63,14 +64,16 @@ export default async function minify(env) {
 	console.timeEnd('scan');
 	let buildOptions = {
 		entryPoints: files,
-		format: 'esm',
+		format: 'cjs',
 		write: true,
 		outdir: DIST,
 		platform: 'node',
 		tsconfig: join(SRC, 'tsconfig.json'),
 		sourcemap: true,
 		metafile: true,
-		splitting: true,
+		plugins: [
+			esbuildDecorators({ tsx: true })
+		]
 	};
 	switch (env) {
 		case 'production': {

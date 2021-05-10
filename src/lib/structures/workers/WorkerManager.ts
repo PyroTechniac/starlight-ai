@@ -1,6 +1,6 @@
 import { cpus } from 'node:os';
 import type { IncomingPayload, NoId, OutgoingPayload } from './types.js';
-import { WorkerHandler } from './WorkerHandler.js';
+import { WorkerHandler } from './WorkerHandler';
 import { Store } from '@sapphire/framework';
 
 export class WorkerManager {
@@ -18,6 +18,10 @@ export class WorkerManager {
 
 	public async start(): Promise<void> {
 		await Promise.all(this.workers.map((worker): Promise<void> => worker.start()));
+	}
+
+	public async restart(): Promise<void> {
+		await Promise.all(this.workers.map((worker): Promise<void> => worker.restart()));
 	}
 
 	public async destroy(): Promise<void> {

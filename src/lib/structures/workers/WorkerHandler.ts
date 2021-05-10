@@ -1,11 +1,11 @@
 import { AsyncQueue } from '@sapphire/async-queue';
 import { Worker } from 'node:worker_threads';
-import { ResponseHandler } from './ResponseHandler.js';
-import { URL } from 'node:url';
+import { ResponseHandler } from './ResponseHandler';
 import { cyan, yellow, green, red } from 'colorette';
 import { Store } from '@sapphire/framework';
 import { once } from 'node:events';
-import * as WorkerTypes from './types.js';
+import { IncomingPayload, NoId, OutgoingPayload, OutgoingType } from './types';
+import { join } from 'node:path';
 
 export class WorkerHandler {
 	public lastHeartBeat!: number;
@@ -24,7 +24,7 @@ export class WorkerHandler {
 		return this.queue.remaining;
 	}
 
-	public async send(data: WorkerTypes.NoId<WorkerTypes.IncomingPayload>, delay: number | null = null): Promise<WorkerTypes.OutgoingPayload> {
+	public async send(data: NoId<IncomingPayload>, delay: number | null = null): Promise<OutgoingPayload> {
 		await this.queue.wait();
 
 		try {
@@ -52,7 +52,7 @@ export class WorkerHandler {
 		this.online = false;
 		this.lastHeartBeat = 0;
 		this.worker = new Worker(WorkerHandler.filename)
-			.on('message', (message: WorkerTypes.OutgoingPayload): void => this.handleMessage(message))
+			.on('message', (message: OutgoingPayload): void => this.handleMessage(message))
 			.once('online', (): void => this.handleOnline())
 			.once('exit', (code): void => this.handleExit(code));
 		return this;
@@ -66,8 +66,8 @@ export class WorkerHandler {
 		await this.worker.terminate();
 	}
 
-	private handleMessage(message: WorkerTypes.OutgoingPayload): void {
-		if (message.type === WorkerTypes.OutgoingType.Heartbeat) {
+	private handleMessage(message: OutgoingPayload): void {
+		if (message.type === OutgoingType.Heartbeat) {
 			this.lastHeartBeat = Date.now();
 			return;
 		}
@@ -100,9 +100,6 @@ export class WorkerHandler {
 		Store.injectedContext.logger.info(`${worker} - Thread ${thread} is now ready.`);
 	}
 
-	private static filename = new URL('./worker.js', import.meta.url);
-
-	private static get maximumID(): number {
-		return Number.MAX_SAFE_INTEGER;
-	}
+	private static filename = join(__dirname, 'worker.js');
+	private static maximumID = Number.MAX_SAFE_INTEGER;
 }

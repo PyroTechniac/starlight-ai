@@ -1,18 +1,18 @@
-import * as Framework from '@sapphire/framework';
+import { Args, CommandContext, isOk, Result, UserError } from '@sapphire/framework';
 import type { Message } from 'discord.js';
 import type { TFunction } from 'i18next';
 import type { Args as LexureArgs } from 'lexure';
 import type { LightCommand } from './LightCommand';
 
-export class StarArgs extends Framework.Args {
+export class StarArgs extends Args {
 	public t: TFunction;
 
-	public constructor(message: Message, command: LightCommand, args: LexureArgs, context: Framework.CommandContext, t: TFunction) {
+	public constructor(message: Message, command: LightCommand, args: LexureArgs, context: CommandContext, t: TFunction) {
 		super(message, command, args, context);
 		this.t = t;
 	}
 
-	public nextSplitResult({ delimiter = ',', times = Infinity }: StarArgs.NextSplitOptions = {}): Framework.Result<string[], Framework.UserError> {
+	public nextSplitResult({ delimiter = ',', times = Infinity }: StarArgs.NextSplitOptions = {}): Result<string[], UserError> {
 		if (this.parser.finished) return this.missingArguments();
 
 		const values: string[] = [];
@@ -29,12 +29,12 @@ export class StarArgs extends Framework.Args {
 			if (values.length === times) break;
 		}
 
-		return values.length > 0 ? Framework.Args.ok(values) : this.missingArguments();
+		return values.length > 0 ? Args.ok(values) : this.missingArguments();
 	}
 
 	public nextSplit(options?: StarArgs.NextSplitOptions): string[] {
 		const result = this.nextSplitResult(options);
-		if (Framework.isOk(result)) return result.value;
+		if (isOk(result)) return result.value;
 		throw result.error;
 	}
 }

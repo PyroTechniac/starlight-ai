@@ -2,4 +2,6 @@ import { rm } from 'node:fs/promises';
 
 const distFolder = new URL('../../dist', import.meta.url);
 
-await rm(distFolder, { recursive: true, force: true });
+const cwdFolder = new URL('../../cwd', import.meta.url);
+
+await Promise.all([cwdFolder, distFolder].map((folder) => rm(folder, { recursive: true, force: true })));

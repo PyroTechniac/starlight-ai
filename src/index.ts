@@ -8,13 +8,11 @@ import i18next from 'i18next';
 
 import './lib/preload';
 import { StarlightClient } from './lib/Client';
-import { noop, helpUsagePostProcessor } from './lib/utils/';
+import { noop, helpUsagePostProcessor } from './lib/utils';
 import { DbManager } from './lib/database/util/DbManager';
 
 const client = new StarlightClient({
-	ws: {
-		intents: Intents.ALL
-	},
+	intents: Intents.ALL,
 	logger: {
 		level: LogLevel.Trace
 	},

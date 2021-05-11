@@ -1,7 +1,7 @@
 import { Command, Identifiers, Precondition, PreconditionContext, PreconditionResult } from '@sapphire/framework';
-import { Permissions, Message, TextChannel, NewsChannel } from 'discord.js';
+import { Permissions, Message, TextChannel, NewsChannel, PermissionString } from 'discord.js';
 
-const readablePermissions = {
+const readablePermissions: Record<PermissionString, string> = {
 	ADMINISTRATOR: 'Administrator',
 	VIEW_AUDIT_LOG: 'View Audit Log',
 	MANAGE_GUILD: 'Manage Server',
@@ -49,7 +49,7 @@ export default class CorePrecondition extends Precondition {
 	]).freeze();
 
 	public run(message: Message, _: Command, context: PreconditionContext): PreconditionResult {
-		const required = (context.permissions as Permissions) ?? new Permissions(0);
+		const required = (context.permissions as Permissions) ?? new Permissions(0n);
 		const permissions = message.guild
 			? (message.channel as TextChannel | NewsChannel).permissionsFor(message.client.id!)!
 			: this.dmChannelPermissions;

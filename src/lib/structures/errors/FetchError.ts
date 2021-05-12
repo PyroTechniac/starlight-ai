@@ -6,7 +6,6 @@ export class FetchError extends Error {
 	}
 
 	public toJSON(): unknown {
-		// return this.#json ?? (this.#json = JSON.parse(this.response));
 		return (this.#json ??= JSON.parse(this.response));
 	}
 }

@@ -16,7 +16,7 @@ const client = new StarlightClient({
 	logger: {
 		level: LogLevel.Trace
 	},
-	defaultPrefix: 's!',
+	defaultPrefix: Store.injectedContext.env.parseString('PREFIX', 's!'),
 	caseInsensitiveCommands: true,
 	regexPrefix: /^(hey +)?starlight[,! ]/,
 	shards: 'auto',

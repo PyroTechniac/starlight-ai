@@ -5,7 +5,7 @@ import { LightCommand } from '../../lib/structures/commands/LightCommand';
 import { Stopwatch } from '@sapphire/stopwatch';
 import { Type } from '@sapphire/type';
 import { isThenable, codeBlock } from '@sapphire/utilities';
-import { inspect } from 'node:util';
+import { inspect } from 'util';
 
 @ApplyOptions<CommandOptions>({
 	aliases: ['ev'],

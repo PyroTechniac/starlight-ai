@@ -32,7 +32,9 @@ const readablePermissions: Record<PermissionString, string> = {
 	MOVE_MEMBERS: 'Move Members',
 	USE_VAD: 'Use Voice Activity',
 	PRIORITY_SPEAKER: 'Priority Speaker',
-	VIEW_GUILD_INSIGHTS: 'View Guild Insights'
+	VIEW_GUILD_INSIGHTS: 'View Guild Insights',
+	USE_APPLICATION_COMMANDS: 'Use Application Commands',
+	REQUEST_TO_SPEAK: 'Request to Speak'
 };
 
 export default class CorePrecondition extends Precondition {

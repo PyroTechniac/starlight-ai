@@ -6,8 +6,8 @@ export class GuildEntity extends BaseEntity {
 	public id!: string;
 
 	@Column('varchar', { name: 'language', default: 'en-US' })
-	public language: string = 'en-US';
+	public language = 'en-US';
 
-	@Column('varchar', {name: 'prefix', length: 10, default: process.env.PREFIX})
+	@Column('varchar', { name: 'prefix', length: 10, default: process.env.PREFIX })
 	public prefix = process.env.PREFIX;
 }

@@ -1,7 +1,7 @@
 import { Awaited, CommandContext, PieceContext, UserError } from '@sapphire/framework';
 import { SubCommandPluginCommand, SubCommandPluginCommandOptions } from '@sapphire/plugin-subcommands';
 import { StarArgs } from './StarArgs';
-import { sep } from 'node:path';
+import { sep } from 'path';
 import type { Message } from 'discord.js';
 import * as Lexure from 'lexure';
 

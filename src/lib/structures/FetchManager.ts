@@ -1,7 +1,7 @@
 import Collection from '@discordjs/collection';
 import type { SapphireClient } from '@sapphire/framework';
 import { TimerManager } from '@sapphire/time-utilities';
-import { URL } from 'node:url';
+import { URL } from 'url';
 import { ContentNode } from './ContentNode';
 
 export class FetchManager extends Collection<string, ContentNode> {
@@ -62,6 +62,6 @@ export class FetchManager extends Collection<string, ContentNode> {
 	}
 
 	public static get [Symbol.species](): MapConstructor {
-		return (Collection as unknown) as MapConstructor;
+		return Collection as unknown as MapConstructor;
 	}
 }

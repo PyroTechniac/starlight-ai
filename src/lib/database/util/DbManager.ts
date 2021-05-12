@@ -13,11 +13,9 @@ export class DbManager {
 	private static connectPromise: Promise<DbManager> | null = null;
 
 	public static async connect(): Promise<DbManager> {
-		return (DbManager.instance ??= await (DbManager.connectPromise ??= connect().then(
-			(connection): DbManager => {
-				DbManager.connectPromise = null;
-				return new DbManager(connection);
-			}
-		)));
+		return (DbManager.instance ??= await (DbManager.connectPromise ??= connect().then((connection): DbManager => {
+			DbManager.connectPromise = null;
+			return new DbManager(connection);
+		})));
 	}
 }

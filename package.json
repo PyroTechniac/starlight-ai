@@ -4,7 +4,7 @@
 	"main": "./dist/index.js",
 	"license": "MIT",
 	"scripts": {
-		"start": "node .",
+		"start": "node --enable-source-maps .",
 		"build": "tsc -b src",
 		"clean": "node ./scripts/build/clean.mjs",
 		"lint": "eslint --fix src --ext js,ts"
@@ -48,7 +48,7 @@
 		"eslint-config-prettier": "^8.1.0",
 		"eslint-plugin-prettier": "^3.3.1",
 		"prettier": "^2.2.1",
-		"typescript": "^4.4.0-dev.20210513"
+		"typescript": "^4.3.1-rc"
 	},
 	"prettier": "@sapphire/prettier-config",
 	"resolutions": {

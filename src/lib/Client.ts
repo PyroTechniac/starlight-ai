@@ -7,7 +7,8 @@ import type { PieceContextExtras } from '@sapphire/pieces';
 import type { DbManager } from './database/util/DbManager';
 
 export class StarlightClient extends SapphireClient {
-	public override fetch: FetchManager = new FetchManager(this);
+	// @ts-ignore override doesn't work on props
+	public fetch: FetchManager = new FetchManager(this);
 
 	public constructor(options: ClientOptions) {
 		super(options);
@@ -19,7 +20,8 @@ export class StarlightClient extends SapphireClient {
 		return Store.injectedContext;
 	}
 
-	public override fetchLanguage = (): string => 'en-US';
+	// @ts-ignore override doesn't work on props
+	public fetchLanguage = (): string => 'en-US';
 }
 
 declare module 'discord.js' {

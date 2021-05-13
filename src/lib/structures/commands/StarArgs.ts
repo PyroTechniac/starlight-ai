@@ -5,7 +5,8 @@ import type { Args as LexureArgs } from 'lexure';
 import type { LightCommand } from './LightCommand';
 
 export class StarArgs extends Args {
-	public override t: TFunction;
+	// @ts-ignore override doesn't work on props
+	public t: TFunction;
 
 	public constructor(message: Message, command: LightCommand, args: LexureArgs, context: CommandContext, t: TFunction) {
 		super(message, command, args, context);

@@ -7,7 +7,7 @@ import type { PieceContextExtras } from '@sapphire/pieces';
 import type { DbManager } from './database/util/DbManager';
 
 export class StarlightClient extends SapphireClient {
-	public fetch: FetchManager = new FetchManager(this);
+	public override fetch: FetchManager = new FetchManager(this);
 
 	public constructor(options: ClientOptions) {
 		super(options);
@@ -15,11 +15,11 @@ export class StarlightClient extends SapphireClient {
 		this.context.workers = new WorkerManager();
 	}
 
-	public get context(): PieceContextExtras {
+	public override get context(): PieceContextExtras {
 		return Store.injectedContext;
 	}
 
-	public fetchLanguage = (): string => 'en-US';
+	public override fetchLanguage = (): string => 'en-US';
 }
 
 declare module 'discord.js' {

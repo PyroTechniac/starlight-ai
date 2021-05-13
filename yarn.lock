@@ -2,11 +2,6 @@
 # yarn lockfile v1
 
 
-"@anatine/esbuild-decorators@^0.2.8":
-  version "0.2.8"
-  resolved "https://registry.yarnpkg.com/@anatine/esbuild-decorators/-/esbuild-decorators-0.2.8.tgz#67899378f17d7b23f83b87f38a05b9fa6f161101"
-  integrity sha512-M1KKNDSkeZ0nK4OvcaGCEmW+lSYHS67gXIUwkDRbsXoGwMvFvi/ZUpkJdgCR3RlOeXiV786Dy9kPnkU56wOpow==
-
 "@babel/code-frame@7.12.11":
   version "7.12.11"
   resolved "https://registry.yarnpkg.com/@babel/code-frame/-/code-frame-7.12.11.tgz#f4ad435aa263db935b8f10f2c552d23fb716a63f"
@@ -800,11 +795,6 @@ enquirer@^2.3.5:
   integrity sha512-yjNnPr315/FjS4zIsUxYguYUPP2e1NK4d7E7ZOLiyYCcbFBiTMyID+2wvm2w6+pZ/odMA7cRkjhsPbltwBOrLg==
   dependencies:
     ansi-colors "^4.1.1"
-
-esbuild@^0.11.12:
-  version "0.11.20"
-  resolved "https://registry.yarnpkg.com/esbuild/-/esbuild-0.11.20.tgz#7cefa1aee8b372c184e42457885f7ce5d3e62a1e"
-  integrity sha512-QOZrVpN/Yz74xfat0H6euSgn3RnwLevY1mJTEXneukz1ln9qB+ieaerRMzSeETpz/UJWsBMzRVR/andBht5WKw==
 
 escalade@^3.1.1:
   version "3.1.1"
@@ -2068,10 +2058,15 @@ typeorm@^0.2.32:
     yargs "^16.2.0"
     zen-observable-ts "^1.0.0"
 
-typescript@4.2.4, typescript@^4.2.3, typescript@^4.2.4:
+typescript@4.2.4, typescript@^4.2.4:
   version "4.2.4"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.2.4.tgz#8610b59747de028fda898a8aef0e103f156d0961"
   integrity sha512-V+evlYHZnQkaz8TRBuxTA92yZBPotr5H+WhQ7bD3hZUndx5tGOa1fuCgeSjxAzM1RiN5IzvadIXTVefuuwZCRg==
+
+typescript@^4.4.0-dev.20210513:
+  version "4.4.0-dev.20210513"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.4.0-dev.20210513.tgz#1947773dd5326c1cc598e92c7782271b8970f2d4"
+  integrity sha512-EQpGfND5id9w5jBmc57FRcIIkbPXkupQVNoVL5F0a5nsCGS55eKEsHjRsnDhFT9rv7W5sXrLVWpE4/0qSmxGvw==
 
 uri-js@^4.2.2:
   version "4.4.1"

@@ -5,17 +5,11 @@
 	"license": "MIT",
 	"scripts": {
 		"start": "node .",
-		"typecheck": "tsc -b src",
-		"build": "yarn build-dev",
-		"build-dev": "node ./scripts/build/dev.mjs",
-		"build-prod": "node ./scripts/build/prod.mjs",
+		"build": "tsc -b src",
 		"clean": "node ./scripts/build/clean.mjs",
-		"bundle": "node ./scripts/build/bundle.mjs",
-		"test": "node ./dist/test.js",
 		"lint": "eslint --fix src --ext js,ts"
 	},
 	"dependencies": {
-		"@anatine/esbuild-decorators": "^0.2.8",
 		"@discordjs/collection": "^0.1.6",
 		"@sapphire/async-queue": "^1.1.0",
 		"@sapphire/decorators": "^2.0.10",
@@ -36,6 +30,7 @@
 		"i18next": "^20.2.2",
 		"node-fetch": "^2.6.1",
 		"reflect-metadata": "^0.1.13",
+		"tslib": "^2.2.0",
 		"typeorm": "^0.2.32",
 		"typeorm-naming-strategies": "^2.0.0"
 	},
@@ -49,12 +44,11 @@
 		"@types/node-fetch": "^2.5.10",
 		"@types/ws": "^7.4.1",
 		"discord-api-types": "^0.18.1",
-		"esbuild": "^0.11.12",
 		"eslint": "^7.23.0",
 		"eslint-config-prettier": "^8.1.0",
 		"eslint-plugin-prettier": "^3.3.1",
 		"prettier": "^2.2.1",
-		"typescript": "^4.2.3"
+		"typescript": "^4.4.0-dev.20210513"
 	},
 	"prettier": "@sapphire/prettier-config",
 	"resolutions": {

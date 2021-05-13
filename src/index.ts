@@ -26,6 +26,7 @@ const client = new StarlightClient({
 const main = async (): Promise<void> => {
 	i18next.use(helpUsagePostProcessor);
 	try {
+		throw new Error('test');
 		Store.injectedContext.db = await DbManager.connect();
 		client.logger.info('Logging in');
 		await client.login(Store.injectedContext.env.parseString('BOT_TOKEN'));

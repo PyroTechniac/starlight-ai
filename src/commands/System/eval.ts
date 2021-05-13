@@ -13,7 +13,7 @@ import { inspect } from 'util';
 	preconditions: ['OwnerOnly']
 })
 export default class extends LightCommand {
-	public async run(message: Message, args: LightCommand.Args): Promise<Message> {
+	public override async run(message: Message, args: LightCommand.Args): Promise<Message> {
 		const code = await args.pick('string');
 		const { result, type, time, success } = await this.eval(message, code);
 

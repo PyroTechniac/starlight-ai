@@ -17,12 +17,12 @@ export class FetchManager extends Collection<string, ContentNode> {
 		return this.get(url) ?? this.create(url);
 	}
 
-	public set(url: string, node: ContentNode): this {
+	public override set(url: string, node: ContentNode): this {
 		if (this.#sweepInterval === null) this.#sweepInterval = TimerManager.setInterval(this.sweep.bind(this), 30000);
 		return super.set(url, node);
 	}
 
-	public sweep(fn: (value: ContentNode, key: string, collection: this) => boolean = (cn): boolean => cn.expired, thisArg?: any): number {
+	public override sweep(fn: (value: ContentNode, key: string, collection: this) => boolean = (cn): boolean => cn.expired, thisArg?: any): number {
 		const amount = super.sweep(fn, thisArg);
 
 		if (this.size === 0) {
@@ -61,7 +61,7 @@ export class FetchManager extends Collection<string, ContentNode> {
 		}
 	}
 
-	public static get [Symbol.species](): MapConstructor {
+	public static override get [Symbol.species](): MapConstructor {
 		return Collection as unknown as MapConstructor;
 	}
 }

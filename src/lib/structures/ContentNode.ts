@@ -8,7 +8,7 @@ import { FetchError } from './errors/FetchError';
 
 export type FetchTypes = 'json' | 'buffer' | 'result' | 'text';
 
-export class ContentNode {
+export class ContentNode  {
 	public type: FetchTypes = 'json';
 
 	public createdTimestamp: number = Date.now();

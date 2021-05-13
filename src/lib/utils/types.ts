@@ -13,15 +13,6 @@ export const enum Time {
 
 // #region Interfaces
 
-export interface Resolvable<V> {
-	resolve(): V | Promise<V>;
-}
-
-export interface File {
-	name: string;
-	file: Buffer;
-}
-
 export interface ReferredPromise<V> {
 	promise: Promise<V>;
 	resolve(value?: V): void;

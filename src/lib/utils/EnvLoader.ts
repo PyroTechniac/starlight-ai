@@ -1,35 +1,33 @@
 import { Nullish, isNullish } from '@sapphire/utilities';
+import { EnvError } from '../errors';
+import { toss } from './index';
 
 export class EnvLoader {
 	public parseInteger(key: EnvLoader.EnvInteger, defaultValue?: number): number {
 		const value = process.env[key];
 		if (this.isNullishOrEmpty(value)) {
-			if (typeof defaultValue === 'undefined') throw new Error(`[ENV] ${key} - The key must be an integer, but is empty or undefined.`);
-			return defaultValue;
+			return defaultValue ?? toss(new EnvError(key, 'The key must be an integer, but is empty or undefined.'));
 		}
 
 		const integer = Number(value);
-		if (Number.isInteger(integer)) return integer;
-		throw new Error(`[ENV] ${key} - The key must be an integer, but received '${value}'.`);
+		return Number.isInteger(integer) ? integer : toss(new EnvError(key, `The key must be an integer, but received '${value}'.`));
 	}
 
 	public parseBoolean(key: EnvLoader.EnvBoolean, defaultValue?: boolean): boolean {
 		const value = process.env[key];
 		if (this.isNullishOrEmpty(value)) {
-			if (defaultValue === undefined) throw new Error(`[ENV] ${key} - The key must be a boolean, but is empty or undefined.`);
-			return defaultValue;
+			return defaultValue ?? toss(new EnvError(key, 'The key must be a boolean, but is empty or undefined.'));
 		}
 
 		if (value === 'true') return true;
 		if (value === 'false') return false;
-		throw new Error(`[ENV] ${key} - The key must be a boolean, but received '${value}'.`);
+		throw new EnvError(key, `The key must be a booleam, but received '${value}'.`);
 	}
 
 	public parseString<K extends EnvLoader.EnvString>(key: K, defaultValue?: string): string {
 		const value = process.env[key];
 		if (this.isNullishOrEmpty(value)) {
-			if (defaultValue === undefined) throw new Error(`[ENV] ${key} - The key must be a string, but is empty or undefined.`);
-			return defaultValue;
+			return defaultValue ?? toss(new EnvError(key, 'The key must be a string, but is empty or undefined.'));
 		}
 
 		return value;
@@ -38,8 +36,7 @@ export class EnvLoader {
 	public parseArray(key: EnvLoader.EnvString, defaultValue?: string[]): string[] {
 		const value = process.env[key];
 		if (this.isNullishOrEmpty(value)) {
-			if (defaultValue === undefined) throw new Error(`[ENV] ${key} - The key must be an array, but is empty or undefined.`);
-			return defaultValue;
+			return defaultValue ?? toss(new EnvError(key, 'The key must be an array, but is empty or undefined'));
 		}
 
 		return value.split(' ');

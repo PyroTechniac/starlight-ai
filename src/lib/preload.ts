@@ -4,4 +4,5 @@ import { Store } from '@sapphire/framework';
 
 config();
 
+process.env.NODE_ENV ??= 'development';
 Store.injectedContext.env = new EnvLoader();

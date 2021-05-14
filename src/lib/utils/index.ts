@@ -9,6 +9,10 @@ export const noop = (): null => null;
 
 export const filterArray = <V>(array: V[]): V[] => [...new Set(array)];
 
+export const toss = (value: unknown = null): never => {
+	throw value;
+};
+
 export const rootFolder = join(__dirname, '..', '..', '..');
 
 export const helpUsagePostProcessor: PostProcessorModule = {

@@ -4,11 +4,11 @@ import fetch, { RequestInit, Response } from 'node-fetch';
 import type { FetchManager } from './FetchManager';
 import AbortController from 'abort-controller';
 import { TimerManager } from '@sapphire/time-utilities';
-import { FetchError } from './errors/FetchError';
+import { FetchError } from '../errors';
 
 export type FetchTypes = 'json' | 'buffer' | 'result' | 'text';
 
-export class ContentNode  {
+export class ContentNode {
 	public type: FetchTypes = 'json';
 
 	public createdTimestamp: number = Date.now();

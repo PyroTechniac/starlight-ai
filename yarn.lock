@@ -755,7 +755,7 @@ discord-api-types@^0.18.1:
 
 discord.js@discordjs/discord.js:
   version "12.5.0"
-  resolved "https://codeload.github.com/discordjs/discord.js/tar.gz/73f4114f59fc2f514d570ac8df3eac7d328cca3c"
+  resolved "https://codeload.github.com/discordjs/discord.js/tar.gz/c7334363b36c5f7f1c7880fe77a2e9b2eb1a6442"
   dependencies:
     "@discordjs/collection" "^0.1.6"
     "@discordjs/form-data" "^3.0.1"

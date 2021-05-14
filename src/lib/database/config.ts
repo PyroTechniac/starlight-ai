@@ -2,15 +2,15 @@ import '../preload';
 import { rootFolder } from '../utils';
 import { join } from 'path';
 import { config as dotenvConfig } from 'dotenv';
-import * as TypeORM from 'typeorm';
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 import { Store } from '@sapphire/framework';
+import { Connection, getConnection, ConnectionOptions, createConnection } from 'typeorm';
 
 dotenvConfig();
 
 export const dbFolder = __dirname;
 
-export const config: TypeORM.ConnectionOptions = {
+export const config: ConnectionOptions = {
 	type: 'better-sqlite3',
 	database: join(rootFolder, 'cwd', 'database.sql'),
 	entities: [join(dbFolder, 'entities/*Entity.js')],
@@ -24,10 +24,10 @@ export const config: TypeORM.ConnectionOptions = {
 	logging: Store.injectedContext.env.parseBoolean('TYPEORM_DEBUG_LOGS', true)
 };
 
-export const connect = (): Promise<TypeORM.Connection> => {
+export const connect = (): Promise<Connection> => {
 	try {
-		return Promise.resolve(TypeORM.getConnection());
+		return Promise.resolve(getConnection());
 	} catch {
-		return TypeORM.createConnection(config);
+		return createConnection(config);
 	}
 };

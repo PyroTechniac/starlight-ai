@@ -10,6 +10,7 @@ import './lib/preload';
 import { StarlightClient } from './lib/Client';
 import { noop, helpUsagePostProcessor } from './lib/utils';
 import { DbManager } from './lib/database/util/DbManager';
+import { ConfigParser } from './lib/config/ConfigParser';
 
 const client = new StarlightClient({
 	intents: Intents.ALL,
@@ -26,6 +27,7 @@ const client = new StarlightClient({
 const main = async (): Promise<void> => {
 	i18next.use(helpUsagePostProcessor);
 	try {
+		await ConfigParser.init();
 		Store.injectedContext.db = await DbManager.connect();
 		client.logger.info('Logging in');
 		await client.login(Store.injectedContext.env.parseString('BOT_TOKEN'));

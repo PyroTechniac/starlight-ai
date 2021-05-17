@@ -10,6 +10,9 @@ export class StarlightClient extends SapphireClient {
 	// @ts-ignore override doesn't work on props
 	public fetch: FetchManager = new FetchManager(this);
 
+	// @ts-ignore override doesn't work on props
+	public dev = process.env.NODE_ENV !== 'production';
+
 	public constructor(options: ClientOptions) {
 		super(options);
 
@@ -27,6 +30,7 @@ export class StarlightClient extends SapphireClient {
 declare module 'discord.js' {
 	interface Client {
 		fetch: FetchManager;
+		dev: boolean;
 		readonly context: PieceContextExtras;
 	}
 }

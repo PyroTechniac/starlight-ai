@@ -15,5 +15,6 @@ docs.json
 cwd/
 
 test.js
+test.star
 
 minified/

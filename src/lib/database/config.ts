@@ -12,7 +12,7 @@ export const dbFolder = __dirname;
 
 export const config: ConnectionOptions = {
 	type: 'better-sqlite3',
-	database: join(rootFolder, 'cwd', 'database.sql'),
+	database: rootFolder('cwd', 'database.sql'),
 	entities: [join(dbFolder, 'entities/*Entity.js')],
 	migrations: [join(dbFolder, 'migrations/*.js')],
 	cli: {

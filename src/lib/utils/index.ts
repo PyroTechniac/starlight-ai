@@ -13,7 +13,7 @@ export const toss = (value: unknown = null): never => {
 	throw value;
 };
 
-export const rootFolder = join(__dirname, '..', '..', '..');
+export const rootFolder = (...path: string[]): string => join(__dirname, '..', '..', '..', ...path);
 
 export const helpUsagePostProcessor: PostProcessorModule = {
 	type: 'postProcessor',
